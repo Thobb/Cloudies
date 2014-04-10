@@ -1,0 +1,2 @@
+D:\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceConfiguration.cscfg
+D:\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceDefinition.csdef

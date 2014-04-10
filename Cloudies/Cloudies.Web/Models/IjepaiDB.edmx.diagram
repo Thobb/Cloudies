@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+ <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <edmx:Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <!-- Diagram content (shape and connector positions) -->
+    <edmx:Diagrams>
+      <Diagram DiagramId="46199f4029e7444cbf8156140af0a921" Name="Diagram1" ShowGrid="false">
+        <EntityTypeShape EntityType="IjepaiModel.Billing" Width="1.5" PointX="3.25" PointY="7" />
+        <EntityTypeShape EntityType="IjepaiModel.Lab" Width="1.5" PointX="3.25" PointY="3.375" />
+        <EntityTypeShape EntityType="IjepaiModel.LabConfiguration" Width="1.5" PointX="5.125" PointY="3.375" />
+        <EntityTypeShape EntityType="IjepaiModel.LabParticipant" Width="1.5" PointX="3.25" PointY="0.5" />
+        <EntityTypeShape EntityType="IjepaiModel.LabSoftware" Width="1.5" PointX="7" PointY="3.375" />
+        <EntityTypeShape EntityType="IjepaiModel.Permission" Width="1.5" PointX="7.875" PointY="0.5" />
+        <EntityTypeShape EntityType="IjepaiModel.Profile" Width="1.5" PointX="0.75" PointY="0.5" />
+        <EntityTypeShape EntityType="IjepaiModel.Role" Width="1.5" PointX="5.625" PointY="0.5" />
+        <EntityTypeShape EntityType="IjepaiModel.SoftwareList" Width="1.5" PointX="9" PointY="3.375" />
+        <EntityTypeShape EntityType="IjepaiModel.User" Width="1.5" PointX="0.75" PointY="3.375" />
+        <AssociationConnector Association="IjepaiModel.FK_Billing_Labs" />
+        <AssociationConnector Association="IjepaiModel.FK_Lab_LabConfiguration" />
+        <AssociationConnector Association="IjepaiModel.FK_Lab_User" />
+        <AssociationConnector Association="IjepaiModel.FK_LabParticipants_Lab" />
+        <AssociationConnector Association="IjepaiModel.FK_LabSoftwares_LabConfiguration" />
+        <AssociationConnector Association="IjepaiModel.FK_LabParticipants_Role" />
+        <AssociationConnector Association="IjepaiModel.FK_LabSoftwares_SoftwareList" />
+        <AssociationConnector Association="IjepaiModel.FK_Permission_Role" />
+        <AssociationConnector Association="IjepaiModel.FK_User_Profile" />
+      </Diagram>
+    </edmx:Diagrams>
+  </edmx:Designer>
+</edmx:Edmx>

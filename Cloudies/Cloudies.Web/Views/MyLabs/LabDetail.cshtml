@@ -1,0 +1,108 @@
+﻿@model Cloudies.Web.Models.ViewModelNewLab
+
+@{
+    ViewBag.Title = "LabDetail";
+    Layout = "~/Views/Shared/_LayoutPagemenu.cshtml";
+}
+
+<h2>LabDetail</h2>
+
+<div>
+    <hr />
+    <dl class="dl-horizontal">
+        <dt>
+            @Html.DisplayNameFor(model => model.Name)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Name)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VM_Count)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VM_Count)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Start_Time)
+        </dt>
+
+        <dd>
+            @Model.Start_Time.ToString("HH:mm dd/MMMM/yyyy")
+            @*@Html.DisplayFor(model => model.Start_Time)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.End_Time)
+        </dt>
+
+        <dd>
+            @Model.End_Time.ToString("HH:mm dd/MMMM/yyyy")
+            @*@Html.DisplayFor(model => model.End_Time)*@
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.OS)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.OS)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VMType)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VMType)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Ram)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Ram)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Hard_Disk)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Hard_Disk)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.VMNetwork)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.VMNetwork)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Username)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Username)
+        </dd>
+
+        <dt>
+            @Html.DisplayNameFor(model => model.Permissions)
+        </dt>
+
+        <dd>
+            @Html.DisplayFor(model => model.Permissions)
+        </dd>
+
+    </dl>
+</div>
+<p>
+    @Html.ActionLink("Edit", "Edit", new { /* id = Model.PrimaryKey */ }) |
+    @Html.ActionLink("Back to List", "Index", "MyLabs")
+</p>

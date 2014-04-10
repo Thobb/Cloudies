@@ -1,0 +1,106 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="IjepaiModelStoreContainer" CdmEntityContainer="IjepaiEntities">
+    <EntitySetMapping Name="Billings">
+      <EntityTypeMapping TypeName="IjepaiModel.Billing">
+        <MappingFragment StoreEntitySet="Billing">
+          <ScalarProperty Name="Price" ColumnName="Price" />
+          <ScalarProperty Name="Item" ColumnName="Item" />
+          <ScalarProperty Name="Lab_Id" ColumnName="Lab_Id" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Labs">
+      <EntityTypeMapping TypeName="IjepaiModel.Lab">
+        <MappingFragment StoreEntitySet="Lab">
+          <ScalarProperty Name="User_ID" ColumnName="User_ID" />
+          <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
+          <ScalarProperty Name="End_Time" ColumnName="End_Time" />
+          <ScalarProperty Name="Start_Time" ColumnName="Start_Time" />
+          <ScalarProperty Name="Time_Zone" ColumnName="Time_Zone" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabConfigurations">
+      <EntityTypeMapping TypeName="IjepaiModel.LabConfiguration">
+        <MappingFragment StoreEntitySet="LabConfiguration">
+          <ScalarProperty Name="OS" ColumnName="OS" />
+          <ScalarProperty Name="Hard_Disk" ColumnName="Hard_Disk" />
+          <ScalarProperty Name="RAM" ColumnName="RAM" />
+          <ScalarProperty Name="VM_Count" ColumnName="VM_Count" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabParticipants">
+      <EntityTypeMapping TypeName="IjepaiModel.LabParticipant">
+        <MappingFragment StoreEntitySet="LabParticipants">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Email_Address" ColumnName="Email Address" />
+          <ScalarProperty Name="Lab_Id" ColumnName="Lab_Id" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="LabSoftwares">
+      <EntityTypeMapping TypeName="IjepaiModel.LabSoftware">
+        <MappingFragment StoreEntitySet="LabSoftwares">
+          <ScalarProperty Name="Software_Path" ColumnName="Software_Path" />
+          <ScalarProperty Name="Software_Id" ColumnName="Software_Id" />
+          <ScalarProperty Name="Config_Id" ColumnName="Config_Id" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Permissions">
+      <EntityTypeMapping TypeName="IjepaiModel.Permission">
+        <MappingFragment StoreEntitySet="Permission">
+          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="Description" ColumnName="Description" />
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Profiles">
+      <EntityTypeMapping TypeName="IjepaiModel.Profile">
+        <MappingFragment StoreEntitySet="Profile">
+          <ScalarProperty Name="Credit_Card_Number" ColumnName="Credit_Card_Number" />
+          <ScalarProperty Name="Email_Address" ColumnName="Email_Address" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Roles">
+      <EntityTypeMapping TypeName="IjepaiModel.Role">
+        <MappingFragment StoreEntitySet="Role">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="SoftwareLists">
+      <EntityTypeMapping TypeName="IjepaiModel.SoftwareList">
+        <MappingFragment StoreEntitySet="SoftwareList">
+          <ScalarProperty Name="Software_Name" ColumnName="Software_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Users">
+      <EntityTypeMapping TypeName="IjepaiModel.User">
+        <MappingFragment StoreEntitySet="User">
+          <ScalarProperty Name="Profile_Id" ColumnName="Profile_Id" />
+          <ScalarProperty Name="Password" ColumnName="Password" />
+          <ScalarProperty Name="User_Name" ColumnName="User_Name" />
+          <ScalarProperty Name="ID" ColumnName="ID" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>

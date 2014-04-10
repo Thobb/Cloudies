@@ -1,0 +1,141 @@
+@model Cloudies.Web.Models.NewLab
+
+@{
+    ViewBag.Title = "New Lab";
+    Layout = "~/Views/Shared/_LayoutPagemenu.cshtml";
+}
+
+<h2>Create new lab</h2>
+
+@using (Html.BeginForm())
+{
+    @Html.AntiForgeryToken()
+
+    <div class="form-horizontal">
+        <hr />
+        @Html.ValidationSummary(true)
+
+        <h3>Lab Config</h3>
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.LabName, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.LabName)
+                    @Html.ValidationMessageFor(model => model.LabName)
+                </div>
+            </div>
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.NoOfVm, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.NoOfVm)
+                    @Html.ValidationMessageFor(model => model.NoOfVm)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.StartTime, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.StartTime)
+                    @Html.ValidationMessageFor(model => model.StartTime)
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.EndTime, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.EndTime)
+                    @Html.ValidationMessageFor(model => model.EndTime)
+                </div>
+            </div>
+        </div>
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.OS, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.OS)
+                    @Html.ValidationMessageFor(model => model.OS)
+                </div>
+            </div>
+
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Softwares, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Softwares)
+                    @Html.ValidationMessageFor(model => model.Softwares)
+                </div>
+            </div>
+        </div>
+
+        <h3>VM Config</h3>
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.VMType, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VMType)
+                    @Html.ValidationMessageFor(model => model.VMType)
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.VMRam, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.VMRam)
+                    @Html.ValidationMessageFor(model => model.VMRam)
+                </div>
+            </div>
+        </div>
+
+
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.VMHardDisk, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.VMHardDisk)
+                    @Html.ValidationMessageFor(model => model.VMHardDisk)
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.VMNetwork, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.VMNetwork)
+                    @Html.ValidationMessageFor(model => model.VMNetwork)
+                </div>
+            </div>
+        </div>
+
+        <h3>Users</h3>
+        <div class="row">
+            <div class="col-md-8">
+                @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
+                <div class="col-md-10">
+                    @Html.EditorFor(model => model.Username)
+                    @Html.ValidationMessageFor(model => model.Username)
+                </div>
+            </div>
+
+            <div class="col-md-4">
+                @Html.LabelFor(model => model.Rights, new { @class = "control-label col-md-6" })
+                <div class="col-md-4">
+                    @Html.EditorFor(model => model.Rights)
+                    @Html.ValidationMessageFor(model => model.Rights)
+                </div>
+            </div>
+        </div>
+        <div class="form-group">
+            <div class="col-md-offset-2 col-md-10">
+                <input type="submit" value="Create" class="btn btn-default" />
+            </div>
+        </div>
+    </div>
+}
+
+<div>
+    @Html.ActionLink("Back to List", "Index")
+</div>

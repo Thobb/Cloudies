@@ -1,0 +1,2 @@
+D:\Cloudies\Cloudies.Tests\obj\Debug\Cloudies.Tests.csprojResolveAssemblyReference.cache
+D:\Cloudies\Cloudies\Cloudies.Tests\obj\Debug\Cloudies.Tests.csprojResolveAssemblyReference.cache

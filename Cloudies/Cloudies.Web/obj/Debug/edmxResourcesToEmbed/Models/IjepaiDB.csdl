@@ -1,0 +1,268 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="IjepaiModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityContainer Name="IjepaiEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Billings" EntityType="IjepaiModel.Billing" />
+    <EntitySet Name="Labs" EntityType="IjepaiModel.Lab" />
+    <EntitySet Name="LabConfigurations" EntityType="IjepaiModel.LabConfiguration" />
+    <EntitySet Name="LabParticipants" EntityType="IjepaiModel.LabParticipant" />
+    <EntitySet Name="LabSoftwares" EntityType="IjepaiModel.LabSoftware" />
+    <EntitySet Name="Permissions" EntityType="IjepaiModel.Permission" />
+    <EntitySet Name="Profiles" EntityType="IjepaiModel.Profile" />
+    <EntitySet Name="Roles" EntityType="IjepaiModel.Role" />
+    <EntitySet Name="SoftwareLists" EntityType="IjepaiModel.SoftwareList" />
+    <EntitySet Name="Users" EntityType="IjepaiModel.User" />
+    <AssociationSet Name="FK_Billing_Labs" Association="IjepaiModel.FK_Billing_Labs">
+      <End Role="Lab" EntitySet="Labs" />
+      <End Role="Billing" EntitySet="Billings" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lab_LabConfiguration" Association="IjepaiModel.FK_Lab_LabConfiguration">
+      <End Role="LabConfiguration" EntitySet="LabConfigurations" />
+      <End Role="Lab" EntitySet="Labs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Lab_User" Association="IjepaiModel.FK_Lab_User">
+      <End Role="User" EntitySet="Users" />
+      <End Role="Lab" EntitySet="Labs" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabParticipants_Lab" Association="IjepaiModel.FK_LabParticipants_Lab">
+      <End Role="Lab" EntitySet="Labs" />
+      <End Role="LabParticipant" EntitySet="LabParticipants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabSoftwares_LabConfiguration" Association="IjepaiModel.FK_LabSoftwares_LabConfiguration">
+      <End Role="LabConfiguration" EntitySet="LabConfigurations" />
+      <End Role="LabSoftware" EntitySet="LabSoftwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabParticipants_Role" Association="IjepaiModel.FK_LabParticipants_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="LabParticipant" EntitySet="LabParticipants" />
+    </AssociationSet>
+    <AssociationSet Name="FK_LabSoftwares_SoftwareList" Association="IjepaiModel.FK_LabSoftwares_SoftwareList">
+      <End Role="SoftwareList" EntitySet="SoftwareLists" />
+      <End Role="LabSoftware" EntitySet="LabSoftwares" />
+    </AssociationSet>
+    <AssociationSet Name="FK_Permission_Role" Association="IjepaiModel.FK_Permission_Role">
+      <End Role="Role" EntitySet="Roles" />
+      <End Role="Permission" EntitySet="Permissions" />
+    </AssociationSet>
+    <AssociationSet Name="FK_User_Profile" Association="IjepaiModel.FK_User_Profile">
+      <End Role="Profile" EntitySet="Profiles" />
+      <End Role="User" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+  <EntityType Name="Billing">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Lab_Id" Type="Int32" />
+    <Property Name="Item" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Price" Type="Decimal" Precision="16" Scale="2" />
+    <NavigationProperty Name="Lab" Relationship="IjepaiModel.FK_Billing_Labs" FromRole="Billing" ToRole="Lab" />
+  </EntityType>
+  <EntityType Name="Lab">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Time_Zone" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Start_Time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="End_Time" Type="DateTime" Nullable="false" Precision="3" />
+    <Property Name="Config_ID" Type="Int32" Nullable="false" />
+    <Property Name="User_ID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Billings" Relationship="IjepaiModel.FK_Billing_Labs" FromRole="Lab" ToRole="Billing" />
+    <NavigationProperty Name="LabConfiguration" Relationship="IjepaiModel.FK_Lab_LabConfiguration" FromRole="Lab" ToRole="LabConfiguration" />
+    <NavigationProperty Name="User" Relationship="IjepaiModel.FK_Lab_User" FromRole="Lab" ToRole="User" />
+    <NavigationProperty Name="LabParticipants" Relationship="IjepaiModel.FK_LabParticipants_Lab" FromRole="Lab" ToRole="LabParticipant" />
+  </EntityType>
+  <EntityType Name="LabConfiguration">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="VM_Count" Type="Int32" />
+    <Property Name="RAM" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="Hard_Disk" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="OS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <NavigationProperty Name="Labs" Relationship="IjepaiModel.FK_Lab_LabConfiguration" FromRole="LabConfiguration" ToRole="Lab" />
+    <NavigationProperty Name="LabSoftwares" Relationship="IjepaiModel.FK_LabSoftwares_LabConfiguration" FromRole="LabConfiguration" ToRole="LabSoftware" />
+  </EntityType>
+  <EntityType Name="LabParticipant">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Lab_Id" Type="Int32" />
+    <Property Name="Email_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role_ID" Type="Int32" />
+    <NavigationProperty Name="Lab" Relationship="IjepaiModel.FK_LabParticipants_Lab" FromRole="LabParticipant" ToRole="Lab" />
+    <NavigationProperty Name="Role" Relationship="IjepaiModel.FK_LabParticipants_Role" FromRole="LabParticipant" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="LabSoftware">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Config_Id" Type="Int32" Nullable="false" />
+    <Property Name="Software_Id" Type="Int32" Nullable="false" />
+    <Property Name="Software_Path" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LabConfiguration" Relationship="IjepaiModel.FK_LabSoftwares_LabConfiguration" FromRole="LabSoftware" ToRole="LabConfiguration" />
+    <NavigationProperty Name="SoftwareList" Relationship="IjepaiModel.FK_LabSoftwares_SoftwareList" FromRole="LabSoftware" ToRole="SoftwareList" />
+  </EntityType>
+  <EntityType Name="Permission">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
+    <Property Name="Role_ID" Type="Int32" />
+    <NavigationProperty Name="Role" Relationship="IjepaiModel.FK_Permission_Role" FromRole="Permission" ToRole="Role" />
+  </EntityType>
+  <EntityType Name="Profile">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Email_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Credit_Card_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="IjepaiModel.FK_User_Profile" FromRole="Profile" ToRole="User" />
+  </EntityType>
+  <EntityType Name="Role">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LabParticipants" Relationship="IjepaiModel.FK_LabParticipants_Role" FromRole="Role" ToRole="LabParticipant" />
+    <NavigationProperty Name="Permissions" Relationship="IjepaiModel.FK_Permission_Role" FromRole="Role" ToRole="Permission" />
+  </EntityType>
+  <EntityType Name="SoftwareList">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Software_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="LabSoftwares" Relationship="IjepaiModel.FK_LabSoftwares_SoftwareList" FromRole="SoftwareList" ToRole="LabSoftware" />
+  </EntityType>
+  <EntityType Name="User">
+    <Key>
+      <PropertyRef Name="ID" />
+    </Key>
+    <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="User_Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Profile_Id" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Labs" Relationship="IjepaiModel.FK_Lab_User" FromRole="User" ToRole="Lab" />
+    <NavigationProperty Name="Profile" Relationship="IjepaiModel.FK_User_Profile" FromRole="User" ToRole="Profile" />
+  </EntityType>
+  <Association Name="FK_Billing_Labs">
+    <End Type="IjepaiModel.Lab" Role="Lab" Multiplicity="0..1" />
+    <End Type="IjepaiModel.Billing" Role="Billing" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lab">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Billing">
+        <PropertyRef Name="Lab_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lab_LabConfiguration">
+    <End Type="IjepaiModel.LabConfiguration" Role="LabConfiguration" Multiplicity="1" />
+    <End Type="IjepaiModel.Lab" Role="Lab" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LabConfiguration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lab">
+        <PropertyRef Name="Config_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Lab_User">
+    <End Type="IjepaiModel.User" Role="User" Multiplicity="1" />
+    <End Type="IjepaiModel.Lab" Role="Lab" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="User">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Lab">
+        <PropertyRef Name="User_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabParticipants_Lab">
+    <End Type="IjepaiModel.Lab" Role="Lab" Multiplicity="0..1" />
+    <End Type="IjepaiModel.LabParticipant" Role="LabParticipant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Lab">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LabParticipant">
+        <PropertyRef Name="Lab_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabSoftwares_LabConfiguration">
+    <End Type="IjepaiModel.LabConfiguration" Role="LabConfiguration" Multiplicity="1" />
+    <End Type="IjepaiModel.LabSoftware" Role="LabSoftware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="LabConfiguration">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LabSoftware">
+        <PropertyRef Name="Config_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabParticipants_Role">
+    <End Type="IjepaiModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="IjepaiModel.LabParticipant" Role="LabParticipant" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LabParticipant">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_LabSoftwares_SoftwareList">
+    <End Type="IjepaiModel.SoftwareList" Role="SoftwareList" Multiplicity="1" />
+    <End Type="IjepaiModel.LabSoftware" Role="LabSoftware" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="SoftwareList">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="LabSoftware">
+        <PropertyRef Name="Software_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_Permission_Role">
+    <End Type="IjepaiModel.Role" Role="Role" Multiplicity="0..1" />
+    <End Type="IjepaiModel.Permission" Role="Permission" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Role">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="Permission">
+        <PropertyRef Name="Role_ID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK_User_Profile">
+    <End Type="IjepaiModel.Profile" Role="Profile" Multiplicity="1" />
+    <End Type="IjepaiModel.User" Role="User" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Profile">
+        <PropertyRef Name="ID" />
+      </Principal>
+      <Dependent Role="User">
+        <PropertyRef Name="Profile_Id" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+</Schema>
