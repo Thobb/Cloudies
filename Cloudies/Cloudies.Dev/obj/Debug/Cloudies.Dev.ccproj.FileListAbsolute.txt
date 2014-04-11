@@ -95,3 +95,5 @@ D:\Cloudies\Cloudies.Dev\bin\Debug\ServiceConfiguration.cscfg
 D:\Cloudies\Cloudies.Dev\bin\Debug\ServiceDefinition.csdef
 D:\Cloudies\Cloudies\Cloudies.Dev\bin\Debug\ServiceConfiguration.cscfg
 D:\Cloudies\Cloudies\Cloudies.Dev\bin\Debug\ServiceDefinition.csdef
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Dev\bin\Debug\ServiceConfiguration.cscfg
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Dev\bin\Debug\ServiceDefinition.csdef

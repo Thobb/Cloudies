@@ -1,2 +1,4 @@
 D:\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceConfiguration.cscfg
 D:\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceDefinition.csdef
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceConfiguration.cscfg
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Ijepai\bin\Debug\ServiceDefinition.csdef

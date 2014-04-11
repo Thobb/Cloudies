@@ -340,6 +340,7 @@
     <Content Include="Views\Home\EditorTemplates\Date.cshtml" />
     <Content Include="Views\MyLabs\Index.cshtml" />
     <Content Include="Views\MyLabs\LabDetail.cshtml" />
+    <Content Include="Views\MyLabs\getLabs.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

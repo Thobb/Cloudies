@@ -1,2 +1,3 @@
 D:\Cloudies\Cloudies.Tests\obj\Debug\Cloudies.Tests.csprojResolveAssemblyReference.cache
 D:\Cloudies\Cloudies\Cloudies.Tests\obj\Debug\Cloudies.Tests.csprojResolveAssemblyReference.cache
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Tests\obj\Debug\Cloudies.Tests.csprojResolveAssemblyReference.cache
