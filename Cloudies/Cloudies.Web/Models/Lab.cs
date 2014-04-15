@@ -27,6 +27,8 @@ namespace Cloudies.Web.Models
         public System.DateTime End_Time { get; set; }
         public int Config_ID { get; set; }
         public int User_ID { get; set; }
+        public string Status { get; set; }
+        public string HKey { get; set; }
     
         public virtual ICollection<Billing> Billings { get; set; }
         public virtual LabConfiguration LabConfiguration { get; set; }

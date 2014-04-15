@@ -1,7 +1,7 @@
 ﻿<div class="navbar-collapse collapse">
     <ul class="nav navbar-nav">
         <li>@Html.ActionLink("Dashboard", "Dashboard")</li>
-        <li>@Html.ActionLink("New Lab", "NewLab", "NewLabs")</li>
+        <li>@Html.ActionLink("New Lab", "Index", "NewLabs")</li>
         <li>@Html.ActionLink("My Labs", "Index", "MyLabs")</li>
         <li>@Html.ActionLink("History", "Dashboard")</li>
         <li>@Html.ActionLink("Billings", "Dashboard")</li>
@@ -11,27 +11,261 @@
 <hr />
 <table id="lab-list"></table>
 <div id="lab-list-pager"></div>
+<div id="extend-lab-form" title="Change lab duration">
+    <form class="form-horizontal">
+        @Html.AntiForgeryToken()
+        <input type="hidden" autofocus />
+        <label id="extend-lab-form-end-time-label" for="extend-lab-form-end-time" class="control-label col-md-5">End Time</label>
+        <div class="col-md-7">
+            <input type="text" value="" style="max-width: 100%" name="End_Time" id="extend-lab-form-end-time" data-val-required="The End Time field is required." data-val-date="End Time must be a date." data-val="true" class="form-control">
+            <span data-valmsg-replace="true" data-valmsg-for="extend-lab-form-end-time" class="field-validation-valid"></span>
+        </div>
+    </form>
+</div>
+<div id="edit-lab-form" title="Edit lab particulars">
+
+</div>
+<div id="edit-participant-form" title="Add/Remove lab participants">
+
+</div>
+<div id="delete-lab-confirm-dialog" title="Delete lab">
+    <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This would permanantly remove all records of lab (participants and configuration) and lab resources like Virtual machine and Virtual hard disks associated with the lab.</p>
+</div>
 
 
+<script src="@Url.Content("~/Scripts/jquery.datetimepicker.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/grid.locale-en.js")" type="text/javascript"></script>
 <script src="@Url.Content("~/Scripts/jquery.jqGrid.min.js")" type="text/javascript"></script>
+<script src="~/Scripts/jquery.ui.position.js"></script>
+<script src="~/Scripts/jquery.contextMenu.js"></script>
 <script>
+    $("#extend-lab-form").dialog({
+        autoOpen: false,
+        width: '40%',
+        modal: true,
+        buttons: {
+            "Set Duration": function () {
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#edit-lab-form").dialog({
+        autoOpen: false,
+        width: 600,
+        modal: true,
+        buttons: {
+            "Submit": function () {
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#edit-participant-form").dialog({
+        autoOpen: false,
+        width: '90%',
+        modal: true,
+        buttons: {
+            "Submit": function () {
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    $("#delete-lab-confirm-dialog").dialog({
+        autoOpen: false,
+        width: '60%',
+        modal: true,
+        buttons: {
+            "Delete it!": function () {
+                $(this).dialog("close");
+            },
+            "Cancel": function () {
+                $(this).dialog("close");
+            }
+        }
+    });
+    function labActionMethods(method, row) {
+        var rowObj = {};
+        $.each(row.split("&"), function (index, value) {
+            rowObj[value.split("=")[0]] = value.split("=")[1];
+        })
+        if (method == "extendLab") {
+            var end_time = new Date(rowObj.End_Time);
+            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+            var hours = (end_time.getHours() < 10) ? "0" + end_time.getHours() : end_time.getHours();
+            var minutes = (end_time.getMinutes() < 10) ? "0" + end_time.getMinutes() : end_time.getMinutes();
+            var date = hours + ":" + minutes + " " + end_time.getDate() + "-" + monthNames[end_time.getMonth()] + "-" + end_time.getFullYear();
+            $("#extend-lab-form-end-time").val(date)
+            $("#extend-lab-form").dialog("open");
+        } else if(method == "editLab") {
+            $("#edit-lab-form").dialog("open");
+        } else if(method == "editParticipant") {
+            $("#edit-participant-form").dialog("open");
+        } else if(method == "deleteLab") {
+            $("#delete-lab-confirm-dialog").dialog("open");
+        }
+    };
+    function labActions(cellValue, options, rowObject) {
+        var actions = ["extendLab", "deleteLab", "editLab", "addParticipant"];
+        var actionPolicies = {
+            "extendLab": "Disallow",
+            "editLab": "Disallow",
+            "editParticipant": "Disallow",
+            "deleteLab": "Disallow"
+        };
+        var actionClasses = {
+            "extendLab": "ui-icon ui-icon-extlink",
+            "deleteLab": "ui-icon ui-icon-trash",
+            "editLab": "ui-icon ui-icon-pencil",
+            "editParticipant": "ui-icon ui-icon-person"
+        };
+        var actionTitles = {
+            "extendLab": "Extend Lab Duration",
+            "deleteLab": "Remove Lab With Assets",
+            "editLab": "Edit Lab Particulars",
+            "editParticipant": "Add or Remove Participants"
+        };
+        var now = new Date();
+        var status = rowObject.Status;
+        if(status == "Scheduled") {
+            actionPolicies.deleteLab = "Permit";
+            actionPolicies.editLab = "Permit";
+        } else if(status == "Starting") {
+            actionPolicies.extendLab = "Permit";
+            actionPolicies.editParticipant = "Permit";
+        } else if(status == "Available") {
+            actionPolicies.extendLab = "Permit";
+            actionPolicies.addParticipant = "Permit";
+        } else if(status == "Stopping") {
+        } else if (status == "Exhausted") {
+            actionPolicies.deleteLab = "Permit";
+            actionPolicies.editLab = "Permit";
+        }
+        var id = "";
+        var html = "<div style='overflow: hidden; display: inline-block; vertical-align: middle'>";
+        for (action in actionPolicies) {
+            id = action + "-" + options.rowId;
+            html += "<div class='ui-pg-div ui-inline-edit' id='" + id + "'"
+            html += " onmouseout=\"jQuery(this).removeClass('ui-state-hover');\"";
+            html += " onmouseover = \"jQuery(this).addClass('ui-state-hover');\"";
+            html += " onclick=\"labActionMethods.call(this,'" + action + "', '" + decodeURIComponent($.param(rowObject)) + "');\"";
+            html += " style='cursor: pointer; float: left; padding: 0 5px'";
+            html += " title='" + actionTitles[action] + "'>";
+            html += "<span class='" + actionClasses[action] + "'></span></div>";
+        }
+        html += "</div>";
+        return html;
+    }
+    function participantActions(cellValue, options, rowObject){
+        return 'b';
+    }
     $("#lab-list").jqGrid({
         url: "/MyLabs/getLabs",
         datatype: "json",
-        colNames: ["Lab Name", "Start Time", "End Time"],
+        colNames: ["ID", "Lab Name", "Start Time", "End Time", "Status", "Actions"],
         colModel: [
-            { name: 'Name', index: 'Name', width: 100 },
-            { name: 'Start_Time', index: 'Start_Time', width: 150, formatter: 'date', formatoptions: {srcformat: 'Y-m-dTH:i:s', newformat: 'H:i    d-F-Y' } },
-            { name: 'End_Time', index: 'End_Time', width: 150, formatter: 'date', formatoptions: { srcformat: 'Y-m-dTH:i:s', newformat: "H:i    d-F-Y" } }
+            { name: 'ID', index: 'ID', hidden: true, key: true},
+            { name: 'Name', index: 'Name', width: 300 },
+            { name: 'Start_Time', index: 'Start_Time', width: 220, formatter: 'date', align: "Center", formatoptions: {srcformat: 'Y-m-dTH:i:s', newformat: 'H:i    d-F-Y' } },
+            { name: 'End_Time', index: 'End_Time', width: 220, formatter: 'date', align: "Center", formatoptions: { srcformat: 'Y-m-dTH:i:s', newformat: "H:i    d-F-Y" } },
+            { name: 'Status', index: 'Status', width: 180, align: "Center" },
+            { name: 'Actions', width: 190, formatter: labActions, align: "Center"},
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: "#lab-list-pager",
-        sortname: "Start_Time",
         viewrecords: true,
+        gridview: true,
+        rowattr: function(rd) {
+            return { "class": "lab-row"}
+        },
+        sortname: "Start_Time",
         sortorder: "desc",
-        caption: "List of labs"
+        caption: "List of labs",
+        multiselect: false,
+        gridComplete: function () {
+            $('.lab-row').on('click', function (e) {
+            })
+            $.contextMenu({
+                selector: '.lab-row',
+                callback: function (key, options) {
+                    var m = "clicked: " + key;
+                    window.console && console.log(m) || alert(m);
+                },
+                items: {
+                    "edit": { name: "Edit", icon: "edit" },
+                    "cut": { name: "Cut", icon: "cut" },
+                    "copy": { name: "Copy", icon: "copy" },
+                    "paste": { name: "Paste", icon: "paste" },
+                    "delete": { name: "Delete", icon: "delete" },
+                    "sep1": "---------",
+                    "quit": { name: "Quit", icon: "quit" }
+                }
+            });
+        },
+        subGrid: true,
+        height: "100%",
+        subGridOptions: {
+            "plusicon": "ui-icon-triangle-1-e",
+            "minusicon": "ui-icon-triangle-1-s",
+            "openicon": "ui-icon-arrowreturn-1-e",
+            "reloadOnExpand": false,
+            "selectOnExpand": true,
+        },
+        subGridRowExpanded: function (subgrid_id, row_id) {
+            var subgrid_table_id, pager_id;
+            subgrid_table_id = subgrid_id + "_t";
+            pager_id = "p_" + subgrid_table_id;
+            $("#" + subgrid_id).html("<table id='" + subgrid_table_id + "' class='scroll'></table><div id='" + pager_id + "' class='scroll'></div>");
+            $("#" + subgrid_table_id).jqGrid({
+                url: "/MyLabs/getParticipants?id=" + row_id,
+                datatype: "json",
+                colNames: ['Username', 'First Name', 'Last Name', 'Actions'],
+                colModel: [
+                    { name: "Email_Address", index: "Email_Address", width: "300", key: true },
+                    { name: "First_Name", index: "First_Name", width: "300" },
+                    { name: "Last_Name", index: "Last_Name", width: "300" },
+                    { name: "Actions", width: 150, formatter: participantActions}
+                ],
+                rowNum: 20,
+                pager: pager_id,
+                height: "100%",
+                gridview: true,
+                rowattr: function (rd) {
+                    return { "class": "participant-row" }
+                },
+                sortname: "Email_Address",
+                sortorder: "asc",
+                gridComplete: function () {
+                    $('.participant-row').on('click', function (e) {
+                    })
+                    $.contextMenu({
+                        selector: '.participant-row',
+                        callback: function (key, options) {
+                            var m = "clicked: " + key;
+                            window.console && console.log(m) || alert(m);
+                        },
+                        items: {
+                            "sep1": "---------",
+                            "quit": { name: "Quit", icon: "quit" }
+                        }
+                    });
+                },
+            });
+            $("#" + subgrid_table_id).jqGrid('navGrid', "#" + pager_id, {edit: false, add: false, del: false})
+        }
     });
     $("#lab-list").jqGrid('navGrid', "#lab-list-pager", { edit: true, add: true, del: true });
+    $(function () {
+        $("#extend-lab-form-end-time").datetimepicker({
+            format: 'H:i d-M-Y'
+        });
+    });
 </script>

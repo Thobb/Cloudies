@@ -17,9 +17,11 @@ namespace Cloudies.Web.Models
         public int ID { get; set; }
         public Nullable<int> Lab_Id { get; set; }
         public string Email_Address { get; set; }
-        public Nullable<int> Role_ID { get; set; }
+        public string First_Name { get; set; }
+        public string Last_Name { get; set; }
+        public string Role { get; set; }
+        public string VM_ID { get; set; }
     
         public virtual Lab Lab { get; set; }
-        public virtual Role Role { get; set; }
     }
 }

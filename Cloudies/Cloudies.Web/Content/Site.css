@@ -1,4 +1,7 @@
-﻿body {
+﻿:focus {
+    outline: none !important;
+}
+body {
     padding-top: 50px;
     padding-bottom: 20px;
 }
@@ -39,4 +42,82 @@ input[type="checkbox"].input-validation-error {
 
 .validation-summary-valid {
     display: none;
+}
+
+/* User Style */
+.no-overflow {
+    overflow: hidden;
+}
+
+#start-time-label, #end-time-label {
+    width: 34%;
+}
+
+#Start_Time, #End_Time, #extend-lab-form-end-time {
+    background: #fff url("./images/calendar.jpg") no-repeat right 5px top 2px;
+}
+
+.new-participant-row {
+    border: 2px solid #999;
+    border-radius: 5px;
+    margin: 5px 0;
+    padding: 10px 0;
+    background-color: #f9f9ff;
+    position: relative;
+    font-weight: bold;
+}
+
+.new-participant-row-index {
+    background-color: #fff9f9;
+    position: absolute;
+    left: 0;
+    top: 0;
+    border: 2px solid #999;
+    border-radius: 2px 5px 5px 5px;
+    padding: 5px 12px;
+}
+
+.delete-new-participant-row {
+    position: absolute;
+    top: 5px;
+    right: 15px;
+}
+
+#add-participant {
+    padding: 3px 7px;
+}
+
+#add-participant:focus {
+    box-shadow: 0 1px 1px rgba(0, 0, 0, 0.075) inset, 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+/* Plugin CSS Hacks */
+
+#gview_lab-list {
+    font-size: 80%;
+}
+
+.ui-jqgrid .ui-jqgrid-view {
+    font-size: 14px !important;
+}
+
+.tablediv {
+    padding: 7px;
+}
+
+.xdsoft_scrollbar {
+    right: 1px;
+}
+
+.xdsoft_monthselect {
+    padding-right: 15px;
+}
+
+.control-label {
+    font-weight: normal;
+    font-family: Verdana, Tahoma, 'Trebuchet MS';
+}
+
+.ui-icon-triangle-1-s {
+    background-position: -65px -16px !important;
 }

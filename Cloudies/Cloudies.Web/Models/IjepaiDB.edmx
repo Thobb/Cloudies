@@ -25,6 +25,8 @@
           <Property Name="End_Time" Type="datetime" Nullable="false" />
           <Property Name="Config_ID" Type="int" Nullable="false" />
           <Property Name="User_ID" Type="int" Nullable="false" />
+          <Property Name="Status" Type="nvarchar" MaxLength="25" Nullable="false" />
+          <Property Name="HKey" Type="nchar" MaxLength="32" />
         </EntityType>
         <EntityType Name="LabConfiguration">
           <Key>
@@ -32,9 +34,10 @@
           </Key>
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="VM_Count" Type="int" />
-          <Property Name="RAM" Type="nchar" MaxLength="10" />
+          <Property Name="VM_Type" Type="nchar" MaxLength="2" />
           <Property Name="Hard_Disk" Type="nchar" MaxLength="10" />
           <Property Name="OS" Type="nchar" MaxLength="10" />
+          <Property Name="Networked" Type="nchar" MaxLength="1" />
         </EntityType>
         <EntityType Name="LabParticipants">
           <Key>
@@ -43,7 +46,10 @@
           <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Lab_Id" Type="int" />
           <Property Name="Email Address" Type="nvarchar" MaxLength="50" />
-          <Property Name="Role_ID" Type="int" />
+          <Property Name="First_Name" Type="nchar" MaxLength="50" />
+          <Property Name="Last_Name" Type="nchar" MaxLength="50" />
+          <Property Name="Role" Type="nchar" MaxLength="5" />
+          <Property Name="VM_ID" Type="nchar" MaxLength="100" />
         </EntityType>
         <EntityType Name="LabSoftwares">
           <Key>
@@ -54,15 +60,6 @@
           <Property Name="Software_Id" Type="int" Nullable="false" />
           <Property Name="Software_Path" Type="nvarchar(max)" Nullable="false" />
         </EntityType>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="50" />
-          <Property Name="Description" Type="nvarchar(max)" />
-          <Property Name="Role_ID" Type="int" />
-        </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="ID" />
@@ -72,13 +69,6 @@
           <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
           <Property Name="Email_Address" Type="nvarchar" MaxLength="50" />
           <Property Name="Credit_Card_Number" Type="nvarchar" MaxLength="50" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
-          <Property Name="Name" Type="nvarchar" MaxLength="30" Nullable="false" />
         </EntityType>
         <EntityType Name="SoftwareList">
           <Key>
@@ -144,18 +134,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LabParticipants_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="LabParticipants" Type="Self.LabParticipants" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LabParticipants">
-              <PropertyRef Name="Role_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LabSoftwares_LabConfiguration">
           <End Role="LabConfiguration" Type="Self.LabConfiguration" Multiplicity="1" />
           <End Role="LabSoftwares" Type="Self.LabSoftwares" Multiplicity="*" />
@@ -180,18 +158,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_Permission_Role">
-          <End Role="Role" Type="Self.Role" Multiplicity="0..1" />
-          <End Role="Permission" Type="Self.Permission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Permission">
-              <PropertyRef Name="Role_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_User_Profile">
           <End Role="Profile" Type="Self.Profile" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -210,9 +176,7 @@
           <EntitySet Name="LabConfiguration" EntityType="Self.LabConfiguration" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LabParticipants" EntityType="Self.LabParticipants" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="LabSoftwares" EntityType="Self.LabSoftwares" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Permission" EntityType="Self.Permission" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Profile" EntityType="Self.Profile" Schema="dbo" store:Type="Tables" />
-          <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="SoftwareList" EntityType="Self.SoftwareList" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
           <AssociationSet Name="FK_Billing_Labs" Association="Self.FK_Billing_Labs">
@@ -231,10 +195,6 @@
             <End Role="Lab" EntitySet="Lab" />
             <End Role="LabParticipants" EntitySet="LabParticipants" />
           </AssociationSet>
-          <AssociationSet Name="FK_LabParticipants_Role" Association="Self.FK_LabParticipants_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="LabParticipants" EntitySet="LabParticipants" />
-          </AssociationSet>
           <AssociationSet Name="FK_LabSoftwares_LabConfiguration" Association="Self.FK_LabSoftwares_LabConfiguration">
             <End Role="LabConfiguration" EntitySet="LabConfiguration" />
             <End Role="LabSoftwares" EntitySet="LabSoftwares" />
@@ -242,10 +202,6 @@
           <AssociationSet Name="FK_LabSoftwares_SoftwareList" Association="Self.FK_LabSoftwares_SoftwareList">
             <End Role="SoftwareList" EntitySet="SoftwareList" />
             <End Role="LabSoftwares" EntitySet="LabSoftwares" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Permission_Role" Association="Self.FK_Permission_Role">
-            <End Role="Role" EntitySet="Role" />
-            <End Role="Permission" EntitySet="Permission" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Profile" Association="Self.FK_User_Profile">
             <End Role="Profile" EntitySet="Profile" />
@@ -262,9 +218,7 @@
           <EntitySet Name="LabConfigurations" EntityType="IjepaiModel.LabConfiguration" />
           <EntitySet Name="LabParticipants" EntityType="IjepaiModel.LabParticipant" />
           <EntitySet Name="LabSoftwares" EntityType="IjepaiModel.LabSoftware" />
-          <EntitySet Name="Permissions" EntityType="IjepaiModel.Permission" />
           <EntitySet Name="Profiles" EntityType="IjepaiModel.Profile" />
-          <EntitySet Name="Roles" EntityType="IjepaiModel.Role" />
           <EntitySet Name="SoftwareLists" EntityType="IjepaiModel.SoftwareList" />
           <EntitySet Name="Users" EntityType="IjepaiModel.User" />
           <AssociationSet Name="FK_Billing_Labs" Association="IjepaiModel.FK_Billing_Labs">
@@ -287,17 +241,9 @@
             <End Role="LabConfiguration" EntitySet="LabConfigurations" />
             <End Role="LabSoftware" EntitySet="LabSoftwares" />
           </AssociationSet>
-          <AssociationSet Name="FK_LabParticipants_Role" Association="IjepaiModel.FK_LabParticipants_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="LabParticipant" EntitySet="LabParticipants" />
-          </AssociationSet>
           <AssociationSet Name="FK_LabSoftwares_SoftwareList" Association="IjepaiModel.FK_LabSoftwares_SoftwareList">
             <End Role="SoftwareList" EntitySet="SoftwareLists" />
             <End Role="LabSoftware" EntitySet="LabSoftwares" />
-          </AssociationSet>
-          <AssociationSet Name="FK_Permission_Role" Association="IjepaiModel.FK_Permission_Role">
-            <End Role="Role" EntitySet="Roles" />
-            <End Role="Permission" EntitySet="Permissions" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Profile" Association="IjepaiModel.FK_User_Profile">
             <End Role="Profile" EntitySet="Profiles" />
@@ -329,6 +275,8 @@
           <NavigationProperty Name="LabConfiguration" Relationship="IjepaiModel.FK_Lab_LabConfiguration" FromRole="Lab" ToRole="LabConfiguration" />
           <NavigationProperty Name="User" Relationship="IjepaiModel.FK_Lab_User" FromRole="Lab" ToRole="User" />
           <NavigationProperty Name="LabParticipants" Relationship="IjepaiModel.FK_LabParticipants_Lab" FromRole="Lab" ToRole="LabParticipant" />
+          <Property Name="Status" Type="String" Nullable="false" MaxLength="25" FixedLength="false" Unicode="true" />
+          <Property Name="HKey" Type="String" MaxLength="32" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="LabConfiguration">
           <Key>
@@ -336,9 +284,10 @@
           </Key>
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="VM_Count" Type="Int32" />
-          <Property Name="RAM" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="VM_Type" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
           <Property Name="Hard_Disk" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
           <Property Name="OS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+          <Property Name="Networked" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Labs" Relationship="IjepaiModel.FK_Lab_LabConfiguration" FromRole="LabConfiguration" ToRole="Lab" />
           <NavigationProperty Name="LabSoftwares" Relationship="IjepaiModel.FK_LabSoftwares_LabConfiguration" FromRole="LabConfiguration" ToRole="LabSoftware" />
         </EntityType>
@@ -349,9 +298,11 @@
           <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Lab_Id" Type="Int32" />
           <Property Name="Email_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Role_ID" Type="Int32" />
+          <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
+          <Property Name="Role" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
           <NavigationProperty Name="Lab" Relationship="IjepaiModel.FK_LabParticipants_Lab" FromRole="LabParticipant" ToRole="Lab" />
-          <NavigationProperty Name="Role" Relationship="IjepaiModel.FK_LabParticipants_Role" FromRole="LabParticipant" ToRole="Role" />
+          <Property Name="VM_ID" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
         </EntityType>
         <EntityType Name="LabSoftware">
           <Key>
@@ -364,16 +315,6 @@
           <NavigationProperty Name="LabConfiguration" Relationship="IjepaiModel.FK_LabSoftwares_LabConfiguration" FromRole="LabSoftware" ToRole="LabConfiguration" />
           <NavigationProperty Name="SoftwareList" Relationship="IjepaiModel.FK_LabSoftwares_SoftwareList" FromRole="LabSoftware" ToRole="SoftwareList" />
         </EntityType>
-        <EntityType Name="Permission">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" MaxLength="Max" FixedLength="false" Unicode="true" />
-          <Property Name="Role_ID" Type="Int32" />
-          <NavigationProperty Name="Role" Relationship="IjepaiModel.FK_Permission_Role" FromRole="Permission" ToRole="Role" />
-        </EntityType>
         <EntityType Name="Profile">
           <Key>
             <PropertyRef Name="ID" />
@@ -384,15 +325,6 @@
           <Property Name="Email_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Credit_Card_Number" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Users" Relationship="IjepaiModel.FK_User_Profile" FromRole="Profile" ToRole="User" />
-        </EntityType>
-        <EntityType Name="Role">
-          <Key>
-            <PropertyRef Name="ID" />
-          </Key>
-          <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Name" Type="String" Nullable="false" MaxLength="30" FixedLength="false" Unicode="true" />
-          <NavigationProperty Name="LabParticipants" Relationship="IjepaiModel.FK_LabParticipants_Role" FromRole="Role" ToRole="LabParticipant" />
-          <NavigationProperty Name="Permissions" Relationship="IjepaiModel.FK_Permission_Role" FromRole="Role" ToRole="Permission" />
         </EntityType>
         <EntityType Name="SoftwareList">
           <Key>
@@ -473,18 +405,6 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
-        <Association Name="FK_LabParticipants_Role">
-          <End Type="IjepaiModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="IjepaiModel.LabParticipant" Role="LabParticipant" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="LabParticipant">
-              <PropertyRef Name="Role_ID" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
         <Association Name="FK_LabSoftwares_SoftwareList">
           <End Type="IjepaiModel.SoftwareList" Role="SoftwareList" Multiplicity="1" />
           <End Type="IjepaiModel.LabSoftware" Role="LabSoftware" Multiplicity="*" />
@@ -494,18 +414,6 @@
             </Principal>
             <Dependent Role="LabSoftware">
               <PropertyRef Name="Software_Id" />
-            </Dependent>
-          </ReferentialConstraint>
-        </Association>
-        <Association Name="FK_Permission_Role">
-          <End Type="IjepaiModel.Role" Role="Role" Multiplicity="0..1" />
-          <End Type="IjepaiModel.Permission" Role="Permission" Multiplicity="*" />
-          <ReferentialConstraint>
-            <Principal Role="Role">
-              <PropertyRef Name="ID" />
-            </Principal>
-            <Dependent Role="Permission">
-              <PropertyRef Name="Role_ID" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -540,6 +448,8 @@
           <EntitySetMapping Name="Labs">
             <EntityTypeMapping TypeName="IjepaiModel.Lab">
               <MappingFragment StoreEntitySet="Lab">
+                <ScalarProperty Name="HKey" ColumnName="HKey" />
+                <ScalarProperty Name="Status" ColumnName="Status" />
                 <ScalarProperty Name="User_ID" ColumnName="User_ID" />
                 <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
                 <ScalarProperty Name="End_Time" ColumnName="End_Time" />
@@ -553,9 +463,10 @@
           <EntitySetMapping Name="LabConfigurations">
             <EntityTypeMapping TypeName="IjepaiModel.LabConfiguration">
               <MappingFragment StoreEntitySet="LabConfiguration">
+                <ScalarProperty Name="Networked" ColumnName="Networked" />
                 <ScalarProperty Name="OS" ColumnName="OS" />
                 <ScalarProperty Name="Hard_Disk" ColumnName="Hard_Disk" />
-                <ScalarProperty Name="RAM" ColumnName="RAM" />
+                <ScalarProperty Name="VM_Type" ColumnName="VM_Type" />
                 <ScalarProperty Name="VM_Count" ColumnName="VM_Count" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
@@ -564,7 +475,10 @@
           <EntitySetMapping Name="LabParticipants">
             <EntityTypeMapping TypeName="IjepaiModel.LabParticipant">
               <MappingFragment StoreEntitySet="LabParticipants">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+                <ScalarProperty Name="VM_ID" ColumnName="VM_ID" />
+                <ScalarProperty Name="Role" ColumnName="Role" />
+                <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+                <ScalarProperty Name="First_Name" ColumnName="First_Name" />
                 <ScalarProperty Name="Email_Address" ColumnName="Email Address" />
                 <ScalarProperty Name="Lab_Id" ColumnName="Lab_Id" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
@@ -581,16 +495,6 @@
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
-          <EntitySetMapping Name="Permissions">
-            <EntityTypeMapping TypeName="IjepaiModel.Permission">
-              <MappingFragment StoreEntitySet="Permission">
-                <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-                <ScalarProperty Name="Description" ColumnName="Description" />
-                <ScalarProperty Name="Name" ColumnName="Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
           <EntitySetMapping Name="Profiles">
             <EntityTypeMapping TypeName="IjepaiModel.Profile">
               <MappingFragment StoreEntitySet="Profile">
@@ -598,14 +502,6 @@
                 <ScalarProperty Name="Email_Address" ColumnName="Email_Address" />
                 <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
                 <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-                <ScalarProperty Name="ID" ColumnName="ID" />
-              </MappingFragment>
-            </EntityTypeMapping>
-          </EntitySetMapping>
-          <EntitySetMapping Name="Roles">
-            <EntityTypeMapping TypeName="IjepaiModel.Role">
-              <MappingFragment StoreEntitySet="Role">
-                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="ID" ColumnName="ID" />
               </MappingFragment>
             </EntityTypeMapping>

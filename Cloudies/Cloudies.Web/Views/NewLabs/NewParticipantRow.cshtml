@@ -1,0 +1,53 @@
+﻿@model Cloudies.Web.Models.Participant
+@{
+    Layout = null;
+    string prefix = "Participants[" + @ViewBag.ParticipantNum.ToString() + "].";
+}
+    <div class="form-horizontal no-overflow new-participant-row">
+        <span class="new-participant-row-index">@ViewBag.ParticipantNum</span>
+        @Html.ValidationSummary(true)
+
+
+        <div class="form-group col-md-5">
+            @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-5", @for = @prefix + "Username"})
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.Username, new { @class = "form-control", @id = @prefix + "Username", @Name = @prefix + "Username" })
+                @Html.ValidationMessageFor(model => model.Username)
+            </div>
+        </div>
+
+        <div class="form-group col-md-5">
+            @Html.LabelFor(model => model.Role, new { @class = "control-label col-md-5", @for = @prefix + "Role" })
+            <div class="col-md-7">
+                @{
+                    Dictionary<string, string>
+                    list = new Dictionary<string, string>();
+                    list.Add("Guest", "Guest");
+                    list.Add("Admin", "Admin");
+                    var selectList = new SelectList(list, "Value", "Key", "Admin");
+                    ViewData["SelectedValue"] = selectList;
+                }
+
+                @Html.DropDownList("Role", (SelectList)ViewData["SelectedValue"], new { @class = "form-control", @id = @prefix + "Role", @Name = @prefix + "Role" })
+                @Html.ValidationMessageFor(model => model.Role)
+            </div>
+        </div>
+
+        <div class="form-group col-md-5">
+            @Html.LabelFor(model => model.First_Name, new { @class = "control-label col-md-5", @for = @prefix + "First_Name" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.First_Name, new { @class = "form-control", @id = @prefix + "First_Name", @Name = @prefix + "First_Name" })
+                @Html.ValidationMessageFor(model => model.First_Name)
+            </div>
+        </div>
+
+        <div class="form-group col-md-5">
+            @Html.LabelFor(model => model.Last_Name, new { @class = "control-label col-md-5", @for = @prefix + "Last_Name" })
+            <div class="col-md-7">
+                @Html.TextBoxFor(model => model.Last_Name, new { @class = "form-control", @id = @prefix + "Last_Name", @Name = @prefix + "Last_Name" })
+                @Html.ValidationMessageFor(model => model.Last_Name)
+            </div>
+        </div>
+
+        @Html.ActionLink("Delete", "#", null, new { @class = "delete-new-participant-row" })
+    </div>

@@ -22,9 +22,10 @@ namespace Cloudies.Web.Models
     
         public int ID { get; set; }
         public Nullable<int> VM_Count { get; set; }
-        public string RAM { get; set; }
+        public string VM_Type { get; set; }
         public string Hard_Disk { get; set; }
         public string OS { get; set; }
+        public string Networked { get; set; }
     
         public virtual ICollection<Lab> Labs { get; set; }
         public virtual ICollection<LabSoftware> LabSoftwares { get; set; }

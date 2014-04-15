@@ -9,36 +9,51 @@ namespace Cloudies.Web.Models
 {
     public class ViewModelNewLab
     {
+        [Required]
         [DisplayName("Lab Name")]
         public string Name { get; set; }
+        [Required]
         [DisplayName("Number of VM's")]
         public int VM_Count { get; set; }
+        [Required]
         [DataType(DataType.DateTime)]
         [DisplayName("Start Time")]
         public DateTime Start_Time { get; set; }
+        [Required]
         [DataType(DataType.DateTime)]
         [DisplayName("End Time")]
         public DateTime End_Time { get; set; }
 
+        [Required]
         [DisplayName("OS")]
         public string OS { get; set; }
         [DisplayName("Softwares")]
         public ICollection<string> Softwares { get; set; }
+        [Required]
         [DisplayName("VM Type")]
-        public string VMType { get; set; }
-        [DisplayName("VM RAM")]
-        public string Ram{ get; set; }
+        public string VM_Type { get; set; }
+        [Required]
         [DisplayName("VM HD Size")]
         public string Hard_Disk { get; set; }
+        [Required]
         [DisplayName("VM Network")]
         public string VMNetwork { get; set; }
 
+        public ICollection<Participant> Participants { get; set; }
+    }
+
+    public class Participant
+    {
         [DisplayName("Username")]
         public string Username { get; set; }
 
-        [DisplayName("Rights")]
-        public string Permissions { get; set; }
-    
+        [DisplayName("First name")]
+        public string First_Name { get; set; }
 
+        [DisplayName("Last Name")]
+        public string Last_Name { get; set; }
+
+        [DisplayName("Role")]
+        public string Role { get; set; }
     }
 }

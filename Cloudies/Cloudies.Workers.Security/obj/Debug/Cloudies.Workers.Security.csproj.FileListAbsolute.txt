@@ -3,3 +3,8 @@ D:\Cloudies\Cloudies.Workers.Security\bin\Debug\Cloudies.Workers.Security.pdb
 D:\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.csprojResolveAssemblyReference.cache
 D:\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.dll
 D:\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.pdb
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Workers.Security\bin\Debug\Cloudies.Workers.Security.dll
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Workers.Security\bin\Debug\Cloudies.Workers.Security.pdb
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.csprojResolveAssemblyReference.cache
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.dll
+C:\Users\dell\Documents\Visual Studio 2013\Projects\Cloudies\Cloudies\Cloudies.Workers.Security\obj\Debug\Cloudies.Workers.Security.pdb

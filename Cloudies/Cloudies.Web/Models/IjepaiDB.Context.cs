@@ -30,9 +30,7 @@ namespace Cloudies.Web.Models
         public virtual DbSet<LabConfiguration> LabConfigurations { get; set; }
         public virtual DbSet<LabParticipant> LabParticipants { get; set; }
         public virtual DbSet<LabSoftware> LabSoftwares { get; set; }
-        public virtual DbSet<Permission> Permissions { get; set; }
         public virtual DbSet<Profile> Profiles { get; set; }
-        public virtual DbSet<Role> Roles { get; set; }
         public virtual DbSet<SoftwareList> SoftwareLists { get; set; }
         public virtual DbSet<User> Users { get; set; }
     }

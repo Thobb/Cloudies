@@ -14,6 +14,8 @@
     <EntitySetMapping Name="Labs">
       <EntityTypeMapping TypeName="IjepaiModel.Lab">
         <MappingFragment StoreEntitySet="Lab">
+          <ScalarProperty Name="HKey" ColumnName="HKey" />
+          <ScalarProperty Name="Status" ColumnName="Status" />
           <ScalarProperty Name="User_ID" ColumnName="User_ID" />
           <ScalarProperty Name="Config_ID" ColumnName="Config_ID" />
           <ScalarProperty Name="End_Time" ColumnName="End_Time" />
@@ -27,9 +29,10 @@
     <EntitySetMapping Name="LabConfigurations">
       <EntityTypeMapping TypeName="IjepaiModel.LabConfiguration">
         <MappingFragment StoreEntitySet="LabConfiguration">
+          <ScalarProperty Name="Networked" ColumnName="Networked" />
           <ScalarProperty Name="OS" ColumnName="OS" />
           <ScalarProperty Name="Hard_Disk" ColumnName="Hard_Disk" />
-          <ScalarProperty Name="RAM" ColumnName="RAM" />
+          <ScalarProperty Name="VM_Type" ColumnName="VM_Type" />
           <ScalarProperty Name="VM_Count" ColumnName="VM_Count" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
@@ -38,7 +41,10 @@
     <EntitySetMapping Name="LabParticipants">
       <EntityTypeMapping TypeName="IjepaiModel.LabParticipant">
         <MappingFragment StoreEntitySet="LabParticipants">
-          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
+          <ScalarProperty Name="VM_ID" ColumnName="VM_ID" />
+          <ScalarProperty Name="Role" ColumnName="Role" />
+          <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
+          <ScalarProperty Name="First_Name" ColumnName="First_Name" />
           <ScalarProperty Name="Email_Address" ColumnName="Email Address" />
           <ScalarProperty Name="Lab_Id" ColumnName="Lab_Id" />
           <ScalarProperty Name="ID" ColumnName="ID" />
@@ -55,16 +61,6 @@
         </MappingFragment>
       </EntityTypeMapping>
     </EntitySetMapping>
-    <EntitySetMapping Name="Permissions">
-      <EntityTypeMapping TypeName="IjepaiModel.Permission">
-        <MappingFragment StoreEntitySet="Permission">
-          <ScalarProperty Name="Role_ID" ColumnName="Role_ID" />
-          <ScalarProperty Name="Description" ColumnName="Description" />
-          <ScalarProperty Name="Name" ColumnName="Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
     <EntitySetMapping Name="Profiles">
       <EntityTypeMapping TypeName="IjepaiModel.Profile">
         <MappingFragment StoreEntitySet="Profile">
@@ -72,14 +68,6 @@
           <ScalarProperty Name="Email_Address" ColumnName="Email_Address" />
           <ScalarProperty Name="Last_Name" ColumnName="Last_Name" />
           <ScalarProperty Name="First_Name" ColumnName="First_Name" />
-          <ScalarProperty Name="ID" ColumnName="ID" />
-        </MappingFragment>
-      </EntityTypeMapping>
-    </EntitySetMapping>
-    <EntitySetMapping Name="Roles">
-      <EntityTypeMapping TypeName="IjepaiModel.Role">
-        <MappingFragment StoreEntitySet="Role">
-          <ScalarProperty Name="Name" ColumnName="Name" />
           <ScalarProperty Name="ID" ColumnName="ID" />
         </MappingFragment>
       </EntityTypeMapping>
