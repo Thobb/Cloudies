@@ -72,9 +72,9 @@
     </Key>
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="VM_Count" Type="Int32" />
-    <Property Name="VM_Type" Type="String" MaxLength="2" FixedLength="true" Unicode="true" />
-    <Property Name="Hard_Disk" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
-    <Property Name="OS" Type="String" MaxLength="10" FixedLength="true" Unicode="true" />
+    <Property Name="VM_Type" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="Hard_Disk" Type="String" MaxLength="10" FixedLength="false" Unicode="true" />
+    <Property Name="OS" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
     <Property Name="Networked" Type="String" MaxLength="1" FixedLength="true" Unicode="true" />
     <NavigationProperty Name="Labs" Relationship="IjepaiModel.FK_Lab_LabConfiguration" FromRole="LabConfiguration" ToRole="Lab" />
     <NavigationProperty Name="LabSoftwares" Relationship="IjepaiModel.FK_LabSoftwares_LabConfiguration" FromRole="LabConfiguration" ToRole="LabSoftware" />
@@ -86,11 +86,11 @@
     <Property Name="ID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
     <Property Name="Lab_Id" Type="Int32" />
     <Property Name="Email_Address" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
-    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="true" Unicode="true" />
-    <Property Name="Role" Type="String" MaxLength="5" FixedLength="true" Unicode="true" />
+    <Property Name="First_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Last_Name" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="Role" Type="String" MaxLength="15" FixedLength="false" Unicode="true" />
     <NavigationProperty Name="Lab" Relationship="IjepaiModel.FK_LabParticipants_Lab" FromRole="LabParticipant" ToRole="Lab" />
-    <Property Name="VM_ID" Type="String" MaxLength="100" FixedLength="true" Unicode="true" />
+    <Property Name="VM_ID" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
   </EntityType>
   <EntityType Name="LabSoftware">
     <Key>

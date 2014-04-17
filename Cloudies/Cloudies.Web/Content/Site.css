@@ -49,10 +49,6 @@ input[type="checkbox"].input-validation-error {
     overflow: hidden;
 }
 
-#start-time-label, #end-time-label {
-    width: 34%;
-}
-
 #Start_Time, #End_Time, #extend-lab-form-end-time {
     background: #fff url("./images/calendar.jpg") no-repeat right 5px top 2px;
 }

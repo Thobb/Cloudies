@@ -7,9 +7,9 @@
       <Diagram DiagramId="46199f4029e7444cbf8156140af0a921" Name="Diagram1" ShowGrid="false">
         <EntityTypeShape EntityType="IjepaiModel.Billing" Width="1.5" PointX="5.25" PointY="8.375" />
         <EntityTypeShape EntityType="IjepaiModel.Lab" Width="1.5" PointX="3" PointY="3.75" />
-        <EntityTypeShape EntityType="IjepaiModel.LabConfiguration" Width="1.5" PointX="0.75" PointY="4.5" />
+        <EntityTypeShape EntityType="IjepaiModel.LabConfiguration" Width="1.5" PointX="5.125" PointY="4.5" />
         <EntityTypeShape EntityType="IjepaiModel.LabParticipant" Width="1.5" PointX="5.25" PointY="1.25" />
-        <EntityTypeShape EntityType="IjepaiModel.LabSoftware" Width="1.5" PointX="6" PointY="4.75" />
+        <EntityTypeShape EntityType="IjepaiModel.LabSoftware" Width="1.5" PointX="8.125" PointY="4.125" />
         <EntityTypeShape EntityType="IjepaiModel.Profile" Width="1.5" PointX="1.5" PointY="8.75" />
         <EntityTypeShape EntityType="IjepaiModel.SoftwareList" Width="1.5" PointX="3.75" PointY="12" />
         <EntityTypeShape EntityType="IjepaiModel.User" Width="1.5" PointX="0.75" PointY="0.75" />

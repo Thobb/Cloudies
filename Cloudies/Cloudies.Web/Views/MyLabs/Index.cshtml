@@ -12,9 +12,9 @@
 <table id="lab-list"></table>
 <div id="lab-list-pager"></div>
 <div id="extend-lab-form" title="Change lab duration">
-    <form class="form-horizontal">
+    <form class="form-horizontal" id="lab-extend-form">
         @Html.AntiForgeryToken()
-        <input type="hidden" autofocus />
+        <input type="hidden" name="Lab_ID_For_Extend" id="Lab_ID_For_Extend" value="" autofocus />
         <label id="extend-lab-form-end-time-label" for="extend-lab-form-end-time" class="control-label col-md-5">End Time</label>
         <div class="col-md-7">
             <input type="text" value="" style="max-width: 100%" name="End_Time" id="extend-lab-form-end-time" data-val-required="The End Time field is required." data-val-date="End Time must be a date." data-val="true" class="form-control">
@@ -23,13 +23,113 @@
     </form>
 </div>
 <div id="edit-lab-form" title="Edit lab particulars">
+    <form method="post" action="/NewLabs" id="lab-edit-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="Lab_ID_For_Edit" name="Lab_ID_For_Edit" value="" />
+        <div class="form-horizontal">
+            <div class="no-overflow">
+                <div style="width: 50%" class="form-group pull-left">
+                    <label for="Name" class="control-label col-md-4">Lab Name</label>
+                    <div style="width: 60%" class="col-md-10">
+                        <input type="text" value="" name="Name" id="Name" data-val-required="The Lab Name field is required." data-val="true" class="form-control">
+                        <span data-valmsg-replace="true" data-valmsg-for="Name" class="field-validation-valid"></span>
+                    </div>
+                </div>
 
+                <div style="width: 50%" class="form-group pull-right">
+                    <label for="VM_Count" class="control-label col-md-4">Number of VM's</label>
+                    <div style="width:60%" class="col-md-10">
+                        <input type="text" value="" name="VM_Count" id="VM_Count" data-val-required="The Number of VM's field is required." data-val-number="The field Number of VM's must be a number." data-val="true" class="form-control">
+                        <span data-valmsg-replace="true" data-valmsg-for="VM_Count" class="field-validation-valid"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-overflow">
+                <div style="width: 50%" class="form-group pull-left">
+                    <label id="start-time-label" for="Start_Time" class="control-label col-md-4">Start Time</label>
+                    <div style="width: 60%" class="col-md-10">
+                        <input type="text" value="" name="Start_Time" id="Start_Time" data-val-required="The Start Time field is required." data-val-date="The field Start Time must be a date." data-val="true" class="form-control">
+                        <span data-valmsg-replace="true" data-valmsg-for="Start_Time" class="field-validation-valid"></span>
+                    </div>
+                </div>
+
+                <div style="width: 50%" class="form-group pull-right">
+                    <label id="end-time-label" for="End_Time" class="control-label col-md-4">End Time</label>
+                    <div style="width:60%" class="col-md-10">
+                        <input type="text" value="" name="End_Time" id="End_Time" data-val-required="The End Time field is required." data-val-date="The field End Time must be a date." data-val="true" class="form-control">
+                        <span data-valmsg-replace="true" data-valmsg-for="End_Time" class="field-validation-valid"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-overflow">
+                <div style="width: 50%" class="form-group pull-left">
+                    <label for="OS" class="control-label col-md-4">OS</label>
+                    <div style="width: 60%" class="col-md-10">
+                        <select name="OS" id="OS" data-val-required="The OS field is required." data-val="true" class="form-control">
+                            <option value="Windows" selected="selected">Windows</option>
+                            <option value="Linux">Linux</option>
+                        </select>
+                        <span data-valmsg-replace="true" data-valmsg-for="OS" class="field-validation-valid"></span>
+                    </div>
+                </div>
+
+                <div style="width: 50%" class="form-group pull-right">
+                    <label for="VM_Type" class="control-label col-md-4">VM Type</label>
+                    <div style="width:60%" class="col-md-10">
+                        <select name="VM_Type" id="VM_Type" data-val-required="The VM Type field is required." data-val="true" class="form-control">
+                            <option value="A0">A0</option>
+                            <option value="A1">A1</option>
+                            <option value="A2">A2</option>
+                            <option value="A3">A3</option>
+                            <option value="A4">A4</option>
+                            <option value="A5">A5</option>
+                            <option value="A6">A6</option>
+                            <option value="A7">A7</option>
+                        </select>
+                        <span data-valmsg-replace="true" data-valmsg-for="VMNetwork" class="field-validation-valid"></span>
+                    </div>
+                </div>
+            </div>
+
+            <div class="no-overflow">
+                <div style="width: 50%" class="form-group pull-left">
+                    <label for="Hard_Disk" class="control-label col-md-4">VM HD Size</label>
+                    <div style="width: 60%" class="col-md-10">
+                        <input type="text" value="" name="Hard_Disk" id="Hard_Disk" data-val-required="The VM HD Size field is required." data-val="true" class="form-control">
+                        <span data-valmsg-replace="true" data-valmsg-for="Hard_Disk" class="field-validation-valid"></span>
+                    </div>
+                </div>
+
+                <div style="width: 50%" class="form-group pull-right">
+                    <label for="VMNetwork" class="control-label col-md-4">VM Network</label>
+                    <div style="width:60%" class="col-md-10">
+                        <select name="VMNetwork" id="VMNetwork" data-val-required="The VM Network field is required." data-val="true" class="form-control">
+                            <option value="N" selected="selected">No</option>
+                            <option value="Y">Yes</option>
+                        </select>
+                        <span data-valmsg-replace="true" data-valmsg-for="VMNetwork" class="field-validation-valid"></span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </form>
 </div>
 <div id="edit-participant-form" title="Add/Remove lab participants">
-
+    <form action="post">
+        @Html.AntiForgeryToken()
+        <input type="hidden" value="" name="Participants_Of_Lab" id="Participants_Of_Lab" />
+        <div id="lab-participant-list-editor"></div>
+        <a href="#" id="add-new-participant-row" class="pull-right" count="0">Add participant</a>
+    </form>
 </div>
 <div id="delete-lab-confirm-dialog" title="Delete lab">
     <p><span class="ui-icon ui-icon-alert" style="float:left; margin:0 7px 20px 0;"></span>This would permanantly remove all records of lab (participants and configuration) and lab resources like Virtual machine and Virtual hard disks associated with the lab.</p>
+    <form method="post" id="lab-delete-form">
+        @Html.AntiForgeryToken()
+        <input type="hidden" id="Lab_ID_For_Deletion" name="Lab_ID_For_Deletion" value="" />
+    </form>
 </div>
 
 
@@ -45,7 +145,26 @@
         modal: true,
         buttons: {
             "Set Duration": function () {
-                $(this).dialog("close");
+                var formValues = $("#lab-extend-form").serialize();
+                var form = $(this);
+                $.ajax({
+                    url: "NewLabs/ExtendLab",
+                    dataType: "json",
+                    data: formValues,
+                    type: "POST",
+                    complete: function () {
+
+                    },
+                    success: function (data, status, xhr) {
+                        if (data.Status == 0) {
+                            $("#lab-list").trigger("reloadGrid");
+                            form.dialog("close");
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
             },
             "Cancel": function () {
                 $(this).dialog("close");
@@ -54,15 +173,40 @@
     });
     $("#edit-lab-form").dialog({
         autoOpen: false,
-        width: 600,
+        width: '90%',
         modal: true,
         buttons: {
             "Submit": function () {
-                $(this).dialog("close");
+                var formValues = $("#lab-edit-form").serialize()
+                var form = $(this);
+                $.ajax({
+                    url: "NewLabs/EditLab",
+                    data: formValues,
+                    dataType: "json",
+                    type: "POST",
+                    complete: function () {
+
+                    },
+                    success: function (data, status, xhr) {
+                        if (data.Status == 0) {
+                            $("#lab-list").trigger("reloadGrid");
+                            form.dialog("close");
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
             },
             "Cancel": function () {
                 $(this).dialog("close");
             }
+        },
+        open: function () {
+
+        },
+        close: function () {
+
         }
     });
     $("#edit-participant-form").dialog({
@@ -76,6 +220,11 @@
             "Cancel": function () {
                 $(this).dialog("close");
             }
+        },
+        open: function () {
+        },
+        close: function () {
+            $("#lab-participant-list-editor").html("");
         }
     });
     $("#delete-lab-confirm-dialog").dialog({
@@ -83,7 +232,26 @@
         width: '60%',
         modal: true,
         buttons: {
-            "Delete it!": function () {
+            "Delete it": function () {
+                var formValues = $("#lab-delete-form").serialize();
+                var form = $(this);
+                $.ajax({
+                    url: "NewLabs/DeleteLab",
+                    dataType: "json",
+                    data: formValues,
+                    type: "POST",
+                    complete: function () {
+
+                    },
+                    success: function (data, status, xhr) {
+                        if (data.Status == 0) {
+                            form.dialog("close");
+                        }
+                    },
+                    error: function () {
+
+                    }
+                })
                 $(this).dialog("close");
             },
             "Cancel": function () {
@@ -91,24 +259,64 @@
             }
         }
     });
+    function formatDateTime(DateTime) {
+        var dateTime = (typeof (DateTime) == "string") ? new Date(DateTime) : DateTime;
+        var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
+        var hours = (dateTime.getHours() < 10) ? "0" + dateTime.getHours() : dateTime.getHours();
+        var minutes = (dateTime.getMinutes() < 10) ? "0" + dateTime.getMinutes() : dateTime.getMinutes();
+        var time = hours + ":" + minutes;
+        var date = dateTime.getDate() + "-" + monthNames[dateTime.getMonth()] + "-" + dateTime.getFullYear();
+        return date + " " + time;
+    }
     function labActionMethods(method, row) {
         var rowObj = {};
         $.each(row.split("&"), function (index, value) {
             rowObj[value.split("=")[0]] = value.split("=")[1];
         })
         if (method == "extendLab") {
-            var end_time = new Date(rowObj.End_Time);
-            var monthNames = ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"];
-            var hours = (end_time.getHours() < 10) ? "0" + end_time.getHours() : end_time.getHours();
-            var minutes = (end_time.getMinutes() < 10) ? "0" + end_time.getMinutes() : end_time.getMinutes();
-            var date = hours + ":" + minutes + " " + end_time.getDate() + "-" + monthNames[end_time.getMonth()] + "-" + end_time.getFullYear();
+            var date = formatDateTime(rowObj.End_Time)
+            $("#Lab_ID_For_Extend").val(rowObj.ID);
             $("#extend-lab-form-end-time").val(date)
             $("#extend-lab-form").dialog("open");
-        } else if(method == "editLab") {
+        } else if (method == "editLab") {
+            $("#Lab_ID_For_Edit").val(rowObj.ID);
+            $("#Name").val(rowObj.Name);
+            $("#VM_Count").val(rowObj.VM_Count);
+            $("#Start_Time").val(rowObj.Start_Time);
+            $("#End_Time").val(rowObj.End_Time);
+            $("#Hard_Disk").val(rowObj.Hard_Disk)
             $("#edit-lab-form").dialog("open");
-        } else if(method == "editParticipant") {
-            $("#edit-participant-form").dialog("open");
-        } else if(method == "deleteLab") {
+        } else if (method == "editParticipant") {
+            $("#edit-participant-lab-Id").val(rowObj.ID);
+            $.ajax({
+                url: "/MyLabs/getParticipants?id=" + rowObj.ID,
+                dataType: "json",
+                complete: function (xhr, status) {
+
+                },
+                success: function (data, status, xhr) {
+
+                    for (row in data.rows) {
+                        data.rows[row]["Index"] = Number(row);
+                        App.create_new_participant_row(data.rows[row])
+                    }
+
+                    $("#add-new-participant-row").attr("count", Number(row) + 1);
+
+                    var numParticipants = $(".participant-row").length;
+                    if (numParticipants == 0) {
+                        App.create_new_participant_row({ Index: 0 });
+                        $("#add-new-participant-row").attr("count", 1);
+                    }
+
+                    $("#edit-participant-form").dialog("open");
+                },
+                error: function (xhr, status, error) {
+
+                }
+            })
+        } else if (method == "deleteLab") {
+            $("#Lab_ID_For_Deletion").val(rowObj.ID);
             $("#delete-lab-confirm-dialog").dialog("open");
         }
     };
@@ -134,57 +342,69 @@
         };
         var now = new Date();
         var status = rowObject.Status;
-        if(status == "Scheduled") {
+        if (status == "Scheduled") {
             actionPolicies.deleteLab = "Permit";
+            actionPolicies.editParticipant = "Permit";
             actionPolicies.editLab = "Permit";
-        } else if(status == "Starting") {
+        } else if (status == "Starting") {
             actionPolicies.extendLab = "Permit";
             actionPolicies.editParticipant = "Permit";
-        } else if(status == "Available") {
+        } else if (status == "Available") {
             actionPolicies.extendLab = "Permit";
-            actionPolicies.addParticipant = "Permit";
-        } else if(status == "Stopping") {
+            actionPolicies.editParticipant = "Permit";
+            actionPolicies.deleteLab = "Permit";
+        } else if (status == "Stopping") {
         } else if (status == "Exhausted") {
             actionPolicies.deleteLab = "Permit";
-            actionPolicies.editLab = "Permit";
         }
         var id = "";
         var html = "<div style='overflow: hidden; display: inline-block; vertical-align: middle'>";
         for (action in actionPolicies) {
+            var isAllowed = actionPolicies[action] == "Permit";
             id = action + "-" + options.rowId;
             html += "<div class='ui-pg-div ui-inline-edit' id='" + id + "'"
-            html += " onmouseout=\"jQuery(this).removeClass('ui-state-hover');\"";
-            html += " onmouseover = \"jQuery(this).addClass('ui-state-hover');\"";
-            html += " onclick=\"labActionMethods.call(this,'" + action + "', '" + decodeURIComponent($.param(rowObject)) + "');\"";
-            html += " style='cursor: pointer; float: left; padding: 0 5px'";
-            html += " title='" + actionTitles[action] + "'>";
+            if (isAllowed) {
+                html += " onmouseout=\"jQuery(this).removeClass('ui-state-hover');\"";
+                html += " onmouseover = \"jQuery(this).addClass('ui-state-hover');\"";
+                html += " onclick=\"labActionMethods.call(this,'" + action + "', '" + decodeURIComponent($.param(rowObject)) + "');\"";
+                html += " style='cursor: pointer; float: left; padding: 0 5px'";
+                html += " title='" + actionTitles[action] + "'>";
+            } else {
+                html += " style='float: left; padding: 0 5px; opacity: 0.3'";
+                html += " title='This method cannot operate in current context'>";
+            }
             html += "<span class='" + actionClasses[action] + "'></span></div>";
         }
         html += "</div>";
         return html;
     }
-    function participantActions(cellValue, options, rowObject){
+    function participantActions(cellValue, options, rowObject) {
         return 'b';
     }
     $("#lab-list").jqGrid({
         url: "/MyLabs/getLabs",
         datatype: "json",
-        colNames: ["ID", "Lab Name", "Start Time", "End Time", "Status", "Actions"],
+        colNames: ["ID", "Lab Name", "Start Time", "End Time", "Status", "Time Zone", "Actions", 'VM Type', 'VM Count', 'HD Size', 'OS'],
         colModel: [
-            { name: 'ID', index: 'ID', hidden: true, key: true},
-            { name: 'Name', index: 'Name', width: 300 },
-            { name: 'Start_Time', index: 'Start_Time', width: 220, formatter: 'date', align: "Center", formatoptions: {srcformat: 'Y-m-dTH:i:s', newformat: 'H:i    d-F-Y' } },
-            { name: 'End_Time', index: 'End_Time', width: 220, formatter: 'date', align: "Center", formatoptions: { srcformat: 'Y-m-dTH:i:s', newformat: "H:i    d-F-Y" } },
-            { name: 'Status', index: 'Status', width: 180, align: "Center" },
-            { name: 'Actions', width: 190, formatter: labActions, align: "Center"},
+            { name: 'ID', index: 'ID', hidden: true, key: true },
+            { name: 'Name', index: 'Name', width: 200 },
+            { name: 'Start_Time', index: 'Start_Time', width: 220, formatter: 'date', align: "Center", formatoptions: { srcformat: 'Y-m-dTH:i:s', newformat: 'd-F-Y    H:i' } },
+            { name: 'End_Time', index: 'End_Time', width: 220, formatter: 'date', align: "Center", formatoptions: { srcformat: 'Y-m-dTH:i:s', newformat: "d-F-Y    H:i" } },
+            { name: 'Status', index: 'Status', width: 150, align: "Center" },
+            { name: "Time_Zone", index: "Time_Zone", width: 150, align: "Center" },
+            { name: 'Actions', width: 170, formatter: labActions, align: "Center" },
+            { name: "VM_Type", index: "VM_Type", hidden: true },
+            { name: "VM_Count", index: "VM_Count", hidden: true },
+            { name: "Hard_Disk", index: "Hard_Disk", hidden: true },
+            { name: "OS", index: "OS", hidden: true }
         ],
         rowNum: 10,
         rowList: [10, 20, 30],
         pager: "#lab-list-pager",
         viewrecords: true,
         gridview: true,
-        rowattr: function(rd) {
-            return { "class": "lab-row"}
+        rowattr: function (rd) {
+            return { "class": "lab-row" }
         },
         sortname: "Start_Time",
         sortorder: "desc",
@@ -227,12 +447,13 @@
             $("#" + subgrid_table_id).jqGrid({
                 url: "/MyLabs/getParticipants?id=" + row_id,
                 datatype: "json",
-                colNames: ['Username', 'First Name', 'Last Name', 'Actions'],
+                colNames: ['Username', 'First Name', 'Last Name', 'Role', 'Actions'],
                 colModel: [
                     { name: "Email_Address", index: "Email_Address", width: "300", key: true },
-                    { name: "First_Name", index: "First_Name", width: "300" },
-                    { name: "Last_Name", index: "Last_Name", width: "300" },
-                    { name: "Actions", width: 150, formatter: participantActions}
+                    { name: "First_Name", index: "First_Name", width: 225, align: "Center" },
+                    { name: "Last_Name", index: "Last_Name", width: 225, align: "Center" },
+                    { name: "Role", index: "Role", width: 130, align: "Center" },
+                    { name: "Actions", width: 150, formatter: participantActions, align: "Center" },
                 ],
                 rowNum: 20,
                 pager: pager_id,
@@ -259,7 +480,7 @@
                     });
                 },
             });
-            $("#" + subgrid_table_id).jqGrid('navGrid', "#" + pager_id, {edit: false, add: false, del: false})
+            $("#" + subgrid_table_id).jqGrid('navGrid', "#" + pager_id, { edit: false, add: false, del: false })
         }
     });
     $("#lab-list").jqGrid('navGrid', "#lab-list-pager", { edit: true, add: true, del: true });
@@ -267,5 +488,11 @@
         $("#extend-lab-form-end-time").datetimepicker({
             format: 'H:i d-M-Y'
         });
+        $("#Start_Time").datetimepicker({
+            format: 'H:i d-M-Y'
+        })
+        $("#End_Time").datetimepicker({
+            format: 'H:i d-M-Y'
+        })
     });
 </script>

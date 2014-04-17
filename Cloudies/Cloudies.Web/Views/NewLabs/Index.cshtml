@@ -5,129 +5,119 @@
     Layout = "~/Views/Shared/_LayoutPagemenu.cshtml";
 }
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
     @Html.AntiForgeryToken()
-    
+
     <div class="form-horizontal">
         <hr />
         @Html.ValidationSummary(true)
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Name)
+        <div class="no-overflow">
+            <div class="form-group pull-left" style="width: 50%">
+                @Html.LabelFor(model => model.Name, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width: 60%">
+                    @Html.TextBoxFor(model => model.Name, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Name)
+                </div>
             </div>
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VM_Count, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.VM_Count, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VM_Count)
+
+            <div class="form-group pull-right" style="width: 50%">
+                @Html.LabelFor(model => model.VM_Count, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width:60%">
+                    @Html.TextBoxFor(model => model.VM_Count, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VM_Count)
+                </div>
             </div>
         </div>
 
         <div class="no-overflow">
             <div class="form-group pull-left" style="width: 50%">
-                @Html.LabelFor(model => model.Start_Time, new { @class = "control-label col-md-2", @id="start-time-label" })
-                <div class="col-md-10" style="width: 60%">
+                @Html.LabelFor(model => model.Start_Time, new { @class = "control-label col-md-4", @id = "start-time-label" })
+                <div class="col-md-8" style="width: 60%">
                     @Html.TextBoxFor(model => model.Start_Time, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.Start_Time)
                 </div>
             </div>
 
+
             <div class="form-group pull-right" style="width: 50%">
-                @Html.LabelFor(model => model.End_Time, new { @class = "control-label col-md-2", @id="end-time-label" })
-                <div class="col-md-10" style="width:60%">
+                @Html.LabelFor(model => model.End_Time, new { @class = "control-label col-md-4", @id = "end-time-label" })
+                <div class="col-md-8" style="width:60%">
                     @Html.TextBoxFor(model => model.End_Time, new { @class = "form-control" })
                     @Html.ValidationMessageFor(model => model.End_Time)
                 </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.OS, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    Dictionary<string, string>
-                    OSList = new Dictionary<string, string>();
-                    OSList.Add("Windows", "Windows");
-                    OSList.Add("Linux", "Linux");
-                    var OSSelectList = new SelectList(OSList, "Value", "Key", "Windows");
-                    ViewData["SelectedValue"] = OSSelectList;
-                }
-
-                @Html.DropDownList("OS", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.OS)
+        <div class="no-overflow">
+            <div class="form-group pull-left" style="width: 50%">
+                @Html.LabelFor(model => model.OS, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width: 60%">
+                    @{
+    Dictionary<string, string>
+    OSList = new Dictionary<string, string>();
+    OSList.Add("Windows", "Windows");
+    OSList.Add("Linux", "Linux");
+    var OSSelectList = new SelectList(OSList, "Value", "Key", "Windows");
+    ViewData["SelectedValue"] = OSSelectList;
+                    }
+                    @Html.DropDownList("OS", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.OS)
+                </div>
             </div>
 
-        </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VM_Type, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    Dictionary<string, string>
-                    VMTypeList = new Dictionary<string, string>();
-                    VMTypeList.Add("A0", "A0");
-                    VMTypeList.Add("A1", "A1");
-                    VMTypeList.Add("A2", "A2");
-                    VMTypeList.Add("A3", "A3");
-                    VMTypeList.Add("A4", "A4");
-                    VMTypeList.Add("A5", "A5");
-                    VMTypeList.Add("A6", "A6");
-                    VMTypeList.Add("A7", "A7");
-                    var VMTypeSelectList = new SelectList(VMTypeList, "Value", "Key", "A0)");
-                    ViewData["SelectedValue"] = VMTypeSelectList;
-                }
-
-                @Html.DropDownList("VM_Type", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VMNetwork)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Hard_Disk, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.TextBoxFor(model => model.Hard_Disk, new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.Hard_Disk)
+            <div class="form-group pull-right" style="width: 50%">
+                @Html.LabelFor(model => model.VM_Type, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width:60%">
+                    @{
+    Dictionary<string, string>
+    VMTypeList = new Dictionary<string, string>();
+    VMTypeList.Add("A0", "A0");
+    VMTypeList.Add("A1", "A1");
+    VMTypeList.Add("A2", "A2");
+    VMTypeList.Add("A3", "A3");
+    VMTypeList.Add("A4", "A4");
+    VMTypeList.Add("A5", "A5");
+    VMTypeList.Add("A6", "A6");
+    VMTypeList.Add("A7", "A7");
+    var VMTypeSelectList = new SelectList(VMTypeList, "Value", "Key", "A0)");
+    ViewData["SelectedValue"] = VMTypeSelectList;
+                    }
+                    @Html.DropDownList("VM_Type", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VMNetwork)
+                </div>
             </div>
         </div>
 
-        <div class="form-group">
-            @Html.LabelFor(model => model.VMNetwork, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @{
-                    Dictionary<string, string>
-                    list = new Dictionary<string, string>();
-                    list.Add("No", "N");
-                    list.Add("Yes", "Y");
-                    var selectList = new SelectList(list,"Value", "Key","N");
-                    ViewData["SelectedValue"] = selectList;
-                }
+        <div class="no-overflow">
+            <div class="form-group pull-left" style="width: 50%">
+                @Html.LabelFor(model => model.Hard_Disk, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width: 60%">
+                    @Html.TextBoxFor(model => model.Hard_Disk, new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.Hard_Disk)
+                </div>
+            </div>
 
-                @Html.DropDownList("VMNetwork", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
-                @Html.ValidationMessageFor(model => model.VMNetwork)
+
+            <div class="form-group pull-right" style="width: 50%">
+                @Html.LabelFor(model => model.VMNetwork, new { @class = "control-label col-md-4" })
+                <div class="col-md-8" style="width:60%">
+                    @{
+    Dictionary<string, string>
+    list = new Dictionary<string, string>();
+    list.Add("No", "N");
+    list.Add("Yes", "Y");
+    var selectList = new SelectList(list, "Value", "Key", "N");
+    ViewData["SelectedValue"] = selectList;
+                    }
+                    @Html.DropDownList("VMNetwork", (SelectList)ViewData["SelectedValue"], new { @class = "form-control" })
+                    @Html.ValidationMessageFor(model => model.VMNetwork)
+                </div>
             </div>
         </div>
-
-        @*<div class="form-group">
-            @Html.LabelFor(model => model.Username, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Username)
-                @Html.ValidationMessageFor(model => model.Username)
-            </div>
-        </div>
-
-        <div class="form-group">
-            @Html.LabelFor(model => model.Role, new { @class = "control-label col-md-2" })
-            <div class="col-md-10">
-                @Html.EditorFor(model => model.Role)
-                @Html.ValidationMessageFor(model => model.Role)
-            </div>
-        </div>*@
 
         <div id="participant-rows"></div>
         @Html.ActionLink("Add lab participant", "BlankParticipantRow", null, new { id = "add-participant", Class = "pull-right", count = 0 })
@@ -140,7 +130,7 @@
 }
 
 <script type="text/javascript">
-    $(function(){
+    $(function () {
         $("#add-participant").click(function () {
             var that = this;
             $.ajax({

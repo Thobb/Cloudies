@@ -29,9 +29,9 @@
     </Key>
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="VM_Count" Type="int" />
-    <Property Name="VM_Type" Type="nchar" MaxLength="2" />
-    <Property Name="Hard_Disk" Type="nchar" MaxLength="10" />
-    <Property Name="OS" Type="nchar" MaxLength="10" />
+    <Property Name="VM_Type" Type="nvarchar" MaxLength="2" />
+    <Property Name="Hard_Disk" Type="nvarchar" MaxLength="10" />
+    <Property Name="OS" Type="nvarchar" MaxLength="100" />
     <Property Name="Networked" Type="nchar" MaxLength="1" />
   </EntityType>
   <EntityType Name="LabParticipants">
@@ -41,10 +41,10 @@
     <Property Name="ID" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
     <Property Name="Lab_Id" Type="int" />
     <Property Name="Email Address" Type="nvarchar" MaxLength="50" />
-    <Property Name="First_Name" Type="nchar" MaxLength="50" />
-    <Property Name="Last_Name" Type="nchar" MaxLength="50" />
-    <Property Name="Role" Type="nchar" MaxLength="5" />
-    <Property Name="VM_ID" Type="nchar" MaxLength="100" />
+    <Property Name="First_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Last_Name" Type="nvarchar" MaxLength="50" />
+    <Property Name="Role" Type="nvarchar" MaxLength="15" />
+    <Property Name="VM_ID" Type="nvarchar" MaxLength="100" />
   </EntityType>
   <EntityType Name="LabSoftwares">
     <Key>
