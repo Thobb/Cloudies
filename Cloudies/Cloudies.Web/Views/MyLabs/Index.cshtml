@@ -117,7 +117,7 @@
     </form>
 </div>
 <div id="edit-participant-form" title="Add/Remove lab participants">
-    <form action="post">
+    <form action="post" id="participant-edit-form">
         @Html.AntiForgeryToken()
         <input type="hidden" value="" name="Participants_Of_Lab" id="Participants_Of_Lab" />
         <div id="lab-participant-list-editor"></div>
@@ -215,7 +215,24 @@
         modal: true,
         buttons: {
             "Submit": function () {
-                $(this).dialog("close");
+                var form = $(this);
+                var formData = $("#participant-edit-form").serialize();
+                $.ajax({
+                    url: "NewLabs/StoreParticipants",
+                    dataType: "json",
+                    data: formData,
+                    type: "POST",
+                    complete: function () {
+
+                    },
+                    success: function (data, status, xhr) {
+                        $("#lab-list_" + $("#Participants_Of_Lab").val() + "_t").trigger("reloadGrid");
+                        form.dialog("close");
+                    },
+                    error: function () {
+
+                    }
+                })
             },
             "Cancel": function () {
                 $(this).dialog("close");
@@ -245,6 +262,7 @@
                     },
                     success: function (data, status, xhr) {
                         if (data.Status == 0) {
+                            $("#lab-list").trigger("reloadGrid");
                             form.dialog("close");
                         }
                     },
@@ -287,7 +305,7 @@
             $("#Hard_Disk").val(rowObj.Hard_Disk)
             $("#edit-lab-form").dialog("open");
         } else if (method == "editParticipant") {
-            $("#edit-participant-lab-Id").val(rowObj.ID);
+            $("#Participants_Of_Lab").val(rowObj.ID);
             $.ajax({
                 url: "/MyLabs/getParticipants?id=" + rowObj.ID,
                 dataType: "json",
@@ -303,7 +321,7 @@
 
                     $("#add-new-participant-row").attr("count", Number(row) + 1);
 
-                    var numParticipants = $(".participant-row").length;
+                    var numParticipants = $("#lab-participant-list-editor .participant-row").length;
                     if (numParticipants == 0) {
                         App.create_new_participant_row({ Index: 0 });
                         $("#add-new-participant-row").attr("count", 1);

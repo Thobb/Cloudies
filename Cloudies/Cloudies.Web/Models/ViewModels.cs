@@ -39,10 +39,14 @@ namespace Cloudies.Web.Models
         [DisplayName("VM Network")]
         public string VMNetwork { get; set; }
 
+        public virtual ICollection<Participant> Participants { get; set; }
+
     }
 
     public class Participant
     {
+        public int Lab_Id { get; set; }
+
         [DisplayName("Username")]
         public string Username { get; set; }
 

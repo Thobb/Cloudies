@@ -37,20 +37,46 @@ namespace Cloudies.Web.Controllers.Labs
 
             IjepaiEntities db = new IjepaiEntities();
             db.LabConfigurations.Add(labConfig);
-            db.SaveChanges();
-            lab.Config_ID = labConfig.ID;
-            db.Labs.Add(lab);
+
 
             try
             {
                 db.SaveChanges();
+                lab.Config_ID = labConfig.ID;
+                db.Labs.Add(lab);
+                db.SaveChanges();
+                StoreParticipants(newLab.Participants, lab.ID);
             }
             catch (Exception ex)
             {
                 string message = ex.ToString();
             }
 
-            return View("~/Views/MyLabs/LabDetail.cshtml", newLab);
+            return View("~/Views/MyLabs/Index.cshtml");
+        }
+
+        public int StoreParticipants(ICollection<Participant> Participants, int Participants_Of_Lab)
+        {
+            IjepaiEntities db = new IjepaiEntities();
+            db.LabParticipants.Where(p => p.Lab_Id == Participants_Of_Lab).ToList().ForEach(p => db.LabParticipants.Remove(p));
+            if (Participants != null)
+            {
+                foreach (Participant participant in Participants)
+                {
+                    if (participant.Username != null)
+                    {
+                        LabParticipant labParticipant = new LabParticipant();
+                        labParticipant.Email_Address = participant.Username.Trim();
+                        if(participant.First_Name != null) labParticipant.First_Name = participant.First_Name.Trim();
+                        if(participant.Last_Name != null) labParticipant.Last_Name = participant.Last_Name.Trim();
+                        labParticipant.Role = participant.Role.Trim();
+                        labParticipant.Lab_Id = Participants_Of_Lab;
+                        db.LabParticipants.Add(labParticipant);
+                        db.SaveChanges();
+                    }
+                }
+            }
+            return 0;
         }
 
         [HttpPost]
@@ -69,14 +95,6 @@ namespace Cloudies.Web.Controllers.Labs
             db.Entry(lab).State = System.Data.Entity.EntityState.Modified;
             db.SaveChanges();
             return Json(new { Status = 0, Message = "Lab updated succesfully." });
-        }
-
-        [HttpPost]
-        public JsonResult EditLabParticipants(ViewModelEditParticipants newLabParticipants)
-        {
-            IjepaiEntities db = new IjepaiEntities();
-            var participants = db.LabParticipants.Where(p => p.Lab_Id == newLabParticipants.Participants_Of_Lab);
-            return Json(new { Status = 0, Message = "Participants updated successfully." });
         }
 
         [HttpPost]
